@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>New Question</h2>
+<mat-dialog-content class="mat-typography">
+  <form novalidate [formGroup]="newTaskForm">
+    <div class="row align-items-center">
+      <div class="col-12">
+        <mat-form-field class="w-100" appearance="outline" floatLabel="always">
+          <mat-label>Question</mat-label>
+          <input matInput formControlName="question" placeholder="Question">
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-radio-group aria-label="Choose the answer format" formControlName="answer_format">
+          <mat-radio-button value="1">Paragraph answer</mat-radio-button>
+          <mat-radio-button value="2">Check Box list</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <ng-container *ngIf="newTaskForm?.value?.answer_format == 2">
+        <div class="pt-3">
+          <ng-container formArrayName="optionsArray">
+            <div class="col-12" *ngFor="let opt of getCheckboxList(); let optIndex = index" [formGroupName]="optIndex">
+              <mat-form-field class="w-100" appearance="outline" floatLabel="always">
+                <mat-label>Answer Option {{optIndex+1}}</mat-label>
+                <input matInput formControlName="option">
+              </mat-form-field>
+            </div>
+            <div class="col-12" *ngIf="getCheckboxList().length < 5">
+              <button mat-button color="primary" (click)="addAnsOption()">Add Answer Option</button>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+      <div class="col-12 pt-4 pb-2">
+        <mat-checkbox class="w-100" formControlName="other_answer">
+          Allow user to specify their own answer
+        </mat-checkbox>
+      </div>
+      <div class="col-12 pb-4">
+        <mat-checkbox class="w-100" formControlName="is_required">
+          This field is required
+        </mat-checkbox>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="true">Cancel</button>
+  <button mat-raised-button class="bacon-btn" (click)="onSubmitForm()">Save</button>
+</mat-dialog-actions>

@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Review Answers</h2>
+<mat-dialog-content class="mat-typography" *ngIf="data">
+  <div class="row align-items-center">
+    <div class="col-12">
+      <p>{{data.answer}}</p>
+    </div>
+    <ng-container *ngIf="this.data.optionsArray.length">
+      <div class="pt-3">
+        <div class="col-12" *ngFor="let opt of this.data.optionsArray">
+          {{opt.name}}
+        </div>
+      </div>
+    </ng-container>
+    <div class="col-12" *ngIf="data.other_answer">
+      Other - {{data.other_answer}}
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button class="bacon-btn" [mat-dialog-close]="true">Close</button>
+</mat-dialog-actions>
